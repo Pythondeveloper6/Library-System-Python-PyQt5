@@ -1,0 +1,134 @@
+ - daily movement       ---- (add operation- export excl , csv)
+ - books 				---- (add - edit - remove - all books - one book - search - export , import )
+ - clients				---- (add - edit - export , import )
+ - reports :
+ 	- client            ---- (one client  , top 10) from - to - export 
+ 	- books				---- (one book , top 10 ) - export
+ 	- monthly (default) ----  (export)
+ 	- from - to  
+
+ - history (admin) -    ---- actions [daily movement] - filter (time , book , client )
+ - dashboard - 			---- today actions
+ - settings (user - permssions , gmail , branch)
+
+
+ - users [admin , employee] 
+ - permission (before actions)
+ - employee periority
+
+
+
+ ---------------------
+ operation : 
+ 	- datetime 
+ 	- branch
+ 	- user
+
+
+--------------------------------------------------------
+	- books : 
+		- title
+		- description
+		- category
+		- code
+		- parts *
+		- part_order
+		- price
+		- publisher
+		- author
+		- image *
+		- status
+		- date
+
+	- clients :
+		- name
+		- mail
+		- phone 
+		- date
+		- national_id
+
+
+	- employee : --
+		- name
+		- email
+		- phone
+		- date
+		- national_id
+		- periority
+
+		- permissions
+
+
+	- category : 
+		- category_name
+		- parent_category
+
+
+	- Branch :
+		- name
+		- code
+		- location
+
+
+	- daily_movements : 
+		- book
+		- client
+		- type [rent - retrieve]
+		- date
+		- branch
+		- from to 
+		- employee
+
+
+	- history : --
+		- employee
+		- action 
+		- table
+		- date
+		- branch
+
+
+
+	- publisher
+
+
+
+	- author
+
+
+
+
+
+
+
+	- sort on retrieve 
+	- sound 
+	- changed field *
+
+
+
+	- calender
+	- category order 
+
+	- daily movements - real data
+	- search books with title & category
+	- search for similarites 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
