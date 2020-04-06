@@ -1349,16 +1349,29 @@ class Main(QMainWindow , MainUI):
         data2 = [1,2,3,4,5,6,7,8,9] 
 
 
+
+
+        ## retrieve data
+        self.cur.execute(""" 
+            SELECT COUNT(book_id), EXTRACT(MONTH FROM Book_from) as month
+            FROM daily_movements
+            GROUP BY month
+        """)
         pen = pg.mkPen(color=(255,0,0))
+        data = self.cur.fetchall()
+        books_count = []
+        rent_count = []
+        for row in data:
+                books_count.append(row[0])
+                rent_count.append(row[1])
+                
+        self.widget.plot(books_count , rent_count , pen=pen , symbol='+' , symbolSize=20,symbolBrush=('w'))
         # self.widget.setBackground('w')
         self.widget.setTitle('المبيعات') # size , color 
-        self.widget.plot(data1,data2 , pen=pen , symbol='+' , symbolSize=20,symbolBrush=('w'))
         self.widget.addLegend()
         self.widget.setLabel('left' ,' left side' , color='red' , size=40 )
         self.widget.setLabel('bottom' ,' bottom side' , color='red' , size=40 )
         self.widget.showGrid(x=True,y=True)
-
-
 
 
 def main():
