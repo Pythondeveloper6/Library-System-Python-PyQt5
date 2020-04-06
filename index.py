@@ -1207,6 +1207,7 @@ class Main(QMainWindow , MainUI):
         print('CLients Tap')
 
     def Open_Dashboard_Tap(self):
+        self.get_dashboard_data()
         self.tabWidget.setCurrentIndex(5)
         print('Dashboard Tap')
 
@@ -1345,15 +1346,9 @@ class Main(QMainWindow , MainUI):
 
     ########### dashboard
     def get_dashboard_data(self):
-        data1 = [1,2,3,4,5,6,7,8,9] 
-        data2 = [1,2,3,4,5,6,7,8,9] 
-
-
-
-
         ## retrieve data
         self.cur.execute(""" 
-            SELECT COUNT(book_id), EXTRACT(MONTH FROM Book_from) as month
+            SELECT COUNT(book_id), EXTRACT(YEAR FROM Book_from) as month
             FROM daily_movements
             GROUP BY month
         """)
@@ -1365,13 +1360,23 @@ class Main(QMainWindow , MainUI):
                 books_count.append(row[0])
                 rent_count.append(row[1])
                 
-        self.widget.plot(books_count , rent_count , pen=pen , symbol='+' , symbolSize=20,symbolBrush=('w'))
+
+        barchart = pg.BarGraphItem(x=books_count , height=rent_count , width=.2)
+        
+        self.widget.addItem(barchart)
+        self.widget.setXRange(1,13,padding=None, update=True)
+        self.widget.setYRange(1,13,1)
+        # self.widget.plot(books_count , rent_count , pen=pen , symbol='+' , symbolSize=20,symbolBrush=('w'))
         # self.widget.setBackground('w')
         self.widget.setTitle('المبيعات') # size , color 
         self.widget.addLegend()
-        self.widget.setLabel('left' ,' left side' , color='red' , size=40 )
-        self.widget.setLabel('bottom' ,' bottom side' , color='red' , size=40 )
+        self.widget.setLabel('left' ,' عدد الكتب المعاره' , color='red' , size=40 )
+        self.widget.setLabel('bottom' ,' في شهر' , color='red' , size=40 )
         self.widget.showGrid(x=True,y=True)
+
+        print(books_count)
+        print(rent_count)
+        print(data)
 
 
 def main():
