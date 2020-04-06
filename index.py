@@ -3,11 +3,11 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.uic import loadUiType
 import sys
-import MySQLdb
+import mysql.connector
 import datetime
 from xlsxwriter import *
 from xlrd import *
-
+import pyqtgraph as pg
 
 MainUI,_ = loadUiType('main.ui')
 
@@ -24,6 +24,8 @@ class Main(QMainWindow , MainUI):
         self.UI_Changes()
         self.Db_Connect()
         self.Handel_Buttons()
+
+        self.get_dashboard_data()
 
         # self.Open_Daily_movements_Tab()
         self.Show_All_Categories()
@@ -46,7 +48,7 @@ class Main(QMainWindow , MainUI):
 
     def Db_Connect(self):
         ## coneection between app and DB
-        self.db = MySQLdb.connect(host='localhost' ,user='root', password='toor', db='lb')
+        self.db = mysql.connector.connect(host='localhost' ,user='root', password='toor', db='lb')
         self.cur = self.db.cursor()
         print('Connection Accepted')
 
@@ -1337,6 +1339,25 @@ class Main(QMainWindow , MainUI):
         ''', (employee_id, action, table, date, employee_branch , username))
         self.db.commit()
         self.Show_History()
+
+
+
+
+    ########### dashboard
+    def get_dashboard_data(self):
+        data1 = [1,2,3,4,5,6,7,8,9] 
+        data2 = [1,2,3,4,5,6,7,8,9] 
+
+
+        pen = pg.mkPen(color=(255,0,0))
+        # self.widget.setBackground('w')
+        self.widget.setTitle('المبيعات') # size , color 
+        self.widget.plot(data1,data2 , pen=pen , symbol='+' , symbolSize=20,symbolBrush=('w'))
+        self.widget.addLegend()
+        self.widget.setLabel('left' ,' left side' , color='red' , size=40 )
+        self.widget.setLabel('bottom' ,' bottom side' , color='red' , size=40 )
+        self.widget.showGrid(x=True,y=True)
+
 
 
 
