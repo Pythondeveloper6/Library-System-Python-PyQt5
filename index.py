@@ -193,8 +193,6 @@ class Main(QMainWindow , MainUI):
                     sql = (''' SELECT name FROM author WHERE id = %s ''')
                     self.cur.execute(sql , [(item+1)])
                     author_name = self.cur.fetchone()
-                    print(author_name)
-                    print(item)
                     self.tableWidget_2.setItem(row,col , QTableWidgetItem(str(author_name[0])))
                 else:
                     self.tableWidget_2.setItem(row, col, QTableWidgetItem(str(item)))
@@ -215,7 +213,7 @@ class Main(QMainWindow , MainUI):
         self.cur.execute(sql ,[(book_title)])
         data = self.cur.fetchall()
 
-        print(data)
+
         self.tableWidget_2.setRowCount(0)
         self.tableWidget_2.insertRow(0)
         for row , form in enumerate(data):
@@ -225,7 +223,7 @@ class Main(QMainWindow , MainUI):
                     self.cur.execute(sql , [(item)])
 
                     category_name = self.cur.fetchone()
-                    print(category_name)
+
 
                     self.tableWidget_2.setItem(row,col , QTableWidgetItem(str(item)))
                 else:
@@ -287,7 +285,6 @@ class Main(QMainWindow , MainUI):
 
         data = self.cur.fetchone()
 
-        print(data)
 
         self.lineEdit_10.setText(data[1])
         self.comboBox_10.setCurrentIndex(int(data[10]))
@@ -418,7 +415,7 @@ class Main(QMainWindow , MainUI):
         self.Show_All_CLients()
         self.Show_History()
         self.statusBar().showMessage('تم اضافه العميل بنجاح')
-        print('done')
+
 
 
 
@@ -430,27 +427,27 @@ class Main(QMainWindow , MainUI):
             sql = ('''SELECT * FROM clients WHERE name = %s''')
             self.cur.execute(sql , [(client_data)])
             data = self.cur.fetchone()
-            print(data)
+
 
         if self.comboBox_11.currentIndex() == 1 :
             sql = ('''SELECT * FROM clients WHERE mail = %s''')
             self.cur.execute(sql , [(client_data)])
             data = self.cur.fetchone()
-            print(data)
+
 
 
         if self.comboBox_11.currentIndex() == 2 :
             sql = ('''SELECT * FROM clients WHERE phone = %s''')
             self.cur.execute(sql , [(client_data)])
             data = self.cur.fetchone()
-            print(data)
+
 
 
         if self.comboBox_11.currentIndex() == 3 :
             sql = ('''SELECT * FROM clients WHERE national_id = %s''')
             self.cur.execute(sql , [(client_data)])
             data = self.cur.fetchone()
-            print(data)
+
 
 
         self.lineEdit_18.setText(data[1])
@@ -748,7 +745,7 @@ class Main(QMainWindow , MainUI):
 
         self.db.commit()
         self.Show_History()
-        print('Branch Added')
+
 
 
 
@@ -777,7 +774,6 @@ class Main(QMainWindow , MainUI):
         ''', (employee_id, action, table, date, employee_branch,category_name))
 
         self.db.commit()
-        print('Category Added')
         self.Show_History()
 
         self.Show_All_Categories()
@@ -805,7 +801,7 @@ class Main(QMainWindow , MainUI):
 
 
         self.db.commit()
-        print('publisher Added')
+
 
 
 
@@ -833,7 +829,7 @@ class Main(QMainWindow , MainUI):
         self.db.commit()
         self.Show_History()
 
-        print('Author Added')
+
 
 
     ###########################################################
@@ -875,7 +871,7 @@ class Main(QMainWindow , MainUI):
 
         publishers = self.cur.fetchall()
         for publisher in publishers:
-            print(publisher[0])
+
             self.comboBox_4.addItem(publisher[0])
             self.comboBox_8.addItem(publisher[0])
 
@@ -957,12 +953,10 @@ class Main(QMainWindow , MainUI):
         self.cur.execute(""" SELECT * FROM employee""")
         data = self.cur.fetchall()
 
-        print(data)
 
         for row in data :
             if row[1] == employee_name and row[7] == employee_password :
 
-                print(type(row[5]))
 
                 self.groupBox_9.setEnabled(True)
                 self.lineEdit_40.setText(row[2])
@@ -1041,7 +1035,6 @@ class Main(QMainWindow , MainUI):
             ''', (employee_name, 1, 1, 1, 1, 1, 1 , 1, 1, 1, 1, 1,1, 1, 1, 1, 1,1, 1, 1, 1, 1, 1 , 1))
 
             self.db.commit()
-            print('permission added')
             self.statusBar().showMessage('تم اضافه كل الصلاحيات للموظف بنجاح')
 
 
@@ -1166,7 +1159,6 @@ class Main(QMainWindow , MainUI):
                     add_branch , add_publisher , add_author , add_category , add_employee , edit_employee))
 
             self.db.commit()
-            print('permission added')
             self.statusBar().showMessage('تم اضافه الصلاحيات للموظف بنجاح')
 
 
@@ -1183,47 +1175,44 @@ class Main(QMainWindow , MainUI):
 
     def Open_Login_Tab(self):
         self.tabWidget.setCurrentIndex(0)
-        print('Login Tap')
 
 
     def Open_Reset_Password_Tab(self):
         self.tabWidget.setCurrentIndex(1)
-        print('Reset Password Tap')
 
 
     def Open_Daily_movements_Tab(self):
         self.tabWidget.setCurrentIndex(2)
-        print('Daily Movements Tap')
 
 
     def Open_Books_Tap(self):
         self.tabWidget.setCurrentIndex(3)
         self.tabWidget_2.setCurrentIndex(0)
-        print('Books Tap')
+
 
     def Open_CLients_Tap(self):
         self.tabWidget.setCurrentIndex(4)
         self.tabWidget_3.setCurrentIndex(0)
-        print('CLients Tap')
+
 
     def Open_Dashboard_Tap(self):
         self.get_dashboard_data()
         self.tabWidget.setCurrentIndex(5)
-        print('Dashboard Tap')
+
 
     def Open_History_Tap(self):
         self.tabWidget.setCurrentIndex(6)
-        print('History Tap')
+
 
 
     def Open_Report_Tap(self):
         self.tabWidget.setCurrentIndex(7)
         self.tabWidget_5.setCurrentIndex(0)
-        print('Report Tap')
+
 
     def Open_Settings_Tab(self):
         self.tabWidget.setCurrentIndex(8)
-        print('Settings Tap')        
+      
 
 
 
@@ -1354,13 +1343,16 @@ class Main(QMainWindow , MainUI):
         """)
         pen = pg.mkPen(color=(255,0,0))
         data = self.cur.fetchall()
+        
         books_count = []
         rent_count = []
+        
         for row in data:
                 books_count.append(row[0])
                 rent_count.append(row[1])
                 
-
+        print(books_count)
+        print(rent_count)
         # barchart = pg.BarGraphItem(x=books_count , height=rent_count , width=.2)
         
         # self.widget.addItem(barchart)
@@ -1386,7 +1378,7 @@ class Main(QMainWindow , MainUI):
         # self.widget.disableAutoRange(True)
         # self.widget.setScale(1)
         ticks = list(range(1,13,1))
-        self.widget.getAxis('bottom').setTicks([[(v, str(v)) for v in ticks ]])
+        # self.widget.getAxis('bottom').setTicks([[(v, str(v)) for v in ticks ]])
 
         self.widget.setTitle('المبيعات') # size , color 
         self.widget.setLabel('left' ,' عدد الكتب المعاره' , color='red' , size=40 )
@@ -1394,9 +1386,6 @@ class Main(QMainWindow , MainUI):
 
 
 
-        print(books_count)
-        print(rent_count)
-        print(data)
 
 
 def main():
