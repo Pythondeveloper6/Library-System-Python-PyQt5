@@ -1348,7 +1348,7 @@ class Main(QMainWindow , MainUI):
     def get_dashboard_data(self):
         ## retrieve data
         self.cur.execute(""" 
-            SELECT COUNT(book_id), EXTRACT(YEAR FROM Book_from) as month
+            SELECT COUNT(book_id), EXTRACT(MONTH FROM Book_from) as month
             FROM daily_movements
             GROUP BY month
         """)
@@ -1361,18 +1361,38 @@ class Main(QMainWindow , MainUI):
                 rent_count.append(row[1])
                 
 
+        # barchart = pg.BarGraphItem(x=books_count , height=rent_count , width=.2)
+        
+        # self.widget.addItem(barchart)
+        # # self.widget.plot(books_count , rent_count , pen=pen , symbol='+' , symbolSize=20,symbolBrush=('w'))
+        # # self.widget.setBackground('w')
+        # self.widget.setTitle('المبيعات') # size , color 
+        # self.widget.addLegend()
+        # self.widget.setLabel('left' ,' عدد الكتب المعاره' , color='red' , size=40 )
+        # self.widget.setLabel('bottom' ,' في شهر' , color='red' , size=40 )
+        # self.widget.showGrid(x=True,y=True)
+
+
+        height = [1,2,3,4,5,6,7,8,9,10,11,12]
+
+
         barchart = pg.BarGraphItem(x=books_count , height=rent_count , width=.2)
         
         self.widget.addItem(barchart)
-        self.widget.setXRange(1,13,padding=None, update=True)
-        self.widget.setYRange(1,13,1)
-        # self.widget.plot(books_count , rent_count , pen=pen , symbol='+' , symbolSize=20,symbolBrush=('w'))
-        # self.widget.setBackground('w')
+        # self.widget.getAxis('bottom').setTicks(range(1,13,1))
+        # self.widget.setColumnFixedWidth(col: 12, width: 2)
+        # self.widget.setXRange(1,13,1)
+        # self.widget.setYRange(1,13,1)
+        # self.widget.disableAutoRange(True)
+        # self.widget.setScale(1)
+        ticks = list(range(1,13,1))
+        self.widget.getAxis('bottom').setTicks([[(v, str(v)) for v in ticks ]])
+
         self.widget.setTitle('المبيعات') # size , color 
-        self.widget.addLegend()
         self.widget.setLabel('left' ,' عدد الكتب المعاره' , color='red' , size=40 )
         self.widget.setLabel('bottom' ,' في شهر' , color='red' , size=40 )
-        self.widget.showGrid(x=True,y=True)
+
+
 
         print(books_count)
         print(rent_count)
