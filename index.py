@@ -92,6 +92,8 @@ class Main(QMainWindow , MainUI):
 
         self.pushButton_38.clicked.connect(self.User_Login_Permissions)
 
+        self.pushButton_47.clicked.connect(self.get_dashboard_data)
+
     def Handel_Login(self):
         ## Handel Login
         pass
@@ -1336,13 +1338,19 @@ class Main(QMainWindow , MainUI):
     ########### dashboard
     def get_dashboard_data(self):
         ## retrieve data
+        filter_date = self.dateEdit_7.date()
+        filter_date = filter_date.toPyDate()
+        year = str(filter_date).split('-')[0]
+
         self.cur.execute(""" 
             SELECT COUNT(book_id), EXTRACT(MONTH FROM Book_from) as month
             FROM daily_movements
+            WHERE year(Book_from) = %s
             GROUP BY month
-        """)
+        """ %(year))
         pen = pg.mkPen(color=(255,0,0))
         data = self.cur.fetchall()
+        
         
         books_count = []
         rent_count = []
@@ -1353,36 +1361,19 @@ class Main(QMainWindow , MainUI):
                 
         print(books_count)
         print(rent_count)
-        # barchart = pg.BarGraphItem(x=books_count , height=rent_count , width=.2)
-        
-        # self.widget.addItem(barchart)
-        # # self.widget.plot(books_count , rent_count , pen=pen , symbol='+' , symbolSize=20,symbolBrush=('w'))
-        # # self.widget.setBackground('w')
-        # self.widget.setTitle('المبيعات') # size , color 
-        # self.widget.addLegend()
-        # self.widget.setLabel('left' ,' عدد الكتب المعاره' , color='red' , size=40 )
-        # self.widget.setLabel('bottom' ,' في شهر' , color='red' , size=40 )
-        # self.widget.showGrid(x=True,y=True)
-
-
-        height = [1,2,3,4,5,6,7,8,9,10,11,12]
-
-
-        barchart = pg.BarGraphItem(x=books_count , height=rent_count , width=.2)
+        barchart = pg.BarGraphItem(x=rent_count , height=books_count , width=.2)
         
         self.widget.addItem(barchart)
-        # self.widget.getAxis('bottom').setTicks(range(1,13,1))
-        # self.widget.setColumnFixedWidth(col: 12, width: 2)
-        # self.widget.setXRange(1,13,1)
-        # self.widget.setYRange(1,13,1)
-        # self.widget.disableAutoRange(True)
-        # self.widget.setScale(1)
-        ticks = list(range(1,13,1))
-        # self.widget.getAxis('bottom').setTicks([[(v, str(v)) for v in ticks ]])
-
+        # self.widget.plot(books_count , rent_count , pen=pen , symbol='+' , symbolSize=20,symbolBrush=('w'))
+        # self.widget.setBackground('w')
         self.widget.setTitle('المبيعات') # size , color 
+        self.widget.addLegend()
         self.widget.setLabel('left' ,' عدد الكتب المعاره' , color='red' , size=40 )
         self.widget.setLabel('bottom' ,' في شهر' , color='red' , size=40 )
+        self.widget.showGrid(x=True,y=True)
+
+
+
 
 
 

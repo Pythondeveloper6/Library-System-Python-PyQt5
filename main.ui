@@ -2237,7 +2237,7 @@ QAbstractSpinBox {
        </rect>
       </property>
       <property name="displayFormat">
-       <string>M/d/yyyy</string>
+       <string>yyyy</string>
       </property>
       <property name="date">
        <date>
